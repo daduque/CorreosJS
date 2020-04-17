@@ -8,57 +8,75 @@ const codeInput = document.getElementById("code");
 codeInput
     .addEventListener("change", (event) => {
         callData(codeInput.value);
-        console.log(event);
     })
 
 export const callData = (id) => {
+
+    //Clean the body after delete de code to search
     const el = document.getElementById('dataImport');
     el.innerHTML = "";
+    if(document.getElementById("successAlert"))
+    {
+        document.getElementById("successAlert").remove()
+    }
+    
 
-    const serverResponse = document.getElementById("serverResponse");
+
+    // const serverResponse = document.getElementById("serverResponse");
 
     if(id != "")
     {
         
         const xhr = new XMLHttpRequest();
-        xhr.open("GET", `http://programasacademicos.utp.edu.co/programa-academico/${id}` , true)
+        const sm = xhr.open("GET", `http://programasacademicos.utp.edu.co/programa-academico/${id}` , true);
         xhr.onload = function() {
+
+            // console.log(this.status, this.readyState, this.getAllResponseHeaders());
+          
         const data = JSON.parse(this.response);
         // console.log(data[2][0].fichaTecnica);
-
+        
+        //Print on a p tag the json response of the server get
         const formatedData = JSON.stringify(data[2][0].fichaTecnica)
+        // serverResponse.innerHTML = formatedData;
         
-        serverResponse.innerHTML = formatedData;
-        
+        //Take the data without format to transform and mapped
         const unformatedData = data[2][0].fichaTecnica;
-
         const entriesData = Object.entries(unformatedData);
-
-        const mapedData = entriesData.map(function(d)
+        const mappedData = entriesData.map(function(d)
             {
+                //Select the area to import the mapped data
+                const dataImportArea = document.getElementById('dataImport');
+
+                //Create each label of the form with as name the key  attribute and append it to the body form
                 const label = document.createElement("label");
                 label.innerHTML = d[0]
                 label.htmlFor = 'text';
-                document.getElementById('dataImport').appendChild(label);
-
-                document.getElementById('dataImport').appendChild(document.createElement('br'));
-
-
+                dataImportArea.appendChild(label);
+                                
+                
+                //Create each input of the form with as value the value attribute and append it to the body form
                 const input = document.createElement("input");
                 input.value = d[1];
                 input.type = 'text';
                 input.autocomplete = 'off';
-                document.getElementById('dataImport').appendChild(input);
+                input.setAttribute('class', 'rounded-sm form-control');
+                dataImportArea.appendChild(input);
 
-
-
-                document.getElementById('dataImport').appendChild(document.createElement('br'));
-
-                return d[0],d[1];
                 
-            })
+                return d[0],d[1];  
+            });
         
-        serverResponse.innerHTML = formatedData;
+        //Test printing a alert div when a user is found it
+        const alertSuccess = document.createElement("div");
+        const selectData = document.getElementById("sectionData")
+        alertSuccess.setAttribute('class', 'alert alert-success alert-dismissible fade show');
+        alertSuccess.setAttribute('role', 'alert');
+        alertSuccess.setAttribute('id', 'successAlert');
+        alertSuccess.innerHTML = 'Usuario Encontrado';
+        selectData.insertBefore(alertSuccess, selectData.children[1]);
+        
+        // serverResponse.innerHTML = formatedData;
 
         
     };
