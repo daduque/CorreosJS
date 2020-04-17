@@ -60,7 +60,7 @@ export const callData = (id) => {
                 input.value = d[1];
                 input.type = 'text';
                 input.autocomplete = 'off';
-                input.setAttribute('class', 'rounded-sm form-control');
+                input.setAttribute('class', 'rounded-sm form-control form-control-sm');
                 dataImportArea.appendChild(input);
 
                 
@@ -86,16 +86,16 @@ export const callData = (id) => {
     xhr.send();
     }
 
-else{
-    // serverResponse.innerHTML = "";
-    // const labels = (document.getElementsByTagName("input"))
-    // const labelsArray = [...labels];
-    // labelsArray.map(function(d) {
-    //     return d.value = "";
-    // });
+    else{
+        // serverResponse.innerHTML = "";
+        // const labels = (document.getElementsByTagName("input"))
+        // const labelsArray = [...labels];
+        // labelsArray.map(function(d) {
+        //     return d.value = "";
+        // });
 
 
-}
+    }
 }
 
 
