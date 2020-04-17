@@ -98,6 +98,33 @@ export const callData = (id) => {
     }
 }
 
+// $(document).ready(function() {
+//     setInterval(function()
+//     {
+//         if(hasBeenSubmitted === false)
+//         {
+//             $.ajax({
+//             url:"hydra.utp.edu.co/derechos-de-peticion/web/app_dev.php/asignarAcceso/consultarAcceso",
+//             type:"GET",
+//             dataType:"json",
+//             data:{
+//             'idPQRDP': 262,
+//             'usuario': 'jhdajaramillo'
+//             },
+//             success: function( resp ) {
+//             console.log('heartbeat sent....');
+//             },
+//             error: function( req, status, err ) {
+//             console.log( 'Error: ', status, err );
+//             }
+//             });
+//         }
+//         else{
+//         hasBeenSubmitted = false;
+//         };
+//     },timeOut);
+//     });
+
 
 // var request = new XMLHttpRequest()
 
