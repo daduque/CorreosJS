@@ -12,6 +12,8 @@ codeInput
     })
 
 export const callData = (id) => {
+    const el = document.getElementById('dataImport');
+    el.innerHTML = "";
 
     const serverResponse = document.getElementById("serverResponse");
 
@@ -22,9 +24,42 @@ export const callData = (id) => {
         xhr.open("GET", `http://programasacademicos.utp.edu.co/programa-academico/${id}` , true)
         xhr.onload = function() {
         const data = JSON.parse(this.response);
-        console.log(data[2][0].fichaTecnica);
+        // console.log(data[2][0].fichaTecnica);
+
+        const formatedData = JSON.stringify(data[2][0].fichaTecnica)
         
-        serverResponse.innerHTML = JSON.stringify(data[2][0].fichaTecnica);
+        serverResponse.innerHTML = formatedData;
+        
+        const unformatedData = data[2][0].fichaTecnica;
+
+        const entriesData = Object.entries(unformatedData);
+
+        const mapedData = entriesData.map(function(d)
+            {
+                const label = document.createElement("label");
+                label.innerHTML = d[0]
+                label.htmlFor = 'text';
+                document.getElementById('dataImport').appendChild(label);
+
+                document.getElementById('dataImport').appendChild(document.createElement('br'));
+
+
+                const input = document.createElement("input");
+                input.value = d[1];
+                input.type = 'text';
+                input.autocomplete = 'off';
+                document.getElementById('dataImport').appendChild(input);
+
+
+
+                document.getElementById('dataImport').appendChild(document.createElement('br'));
+
+                return d[0],d[1];
+                
+            })
+        
+        serverResponse.innerHTML = formatedData;
+
         
     };
     
@@ -34,7 +69,14 @@ export const callData = (id) => {
     }
 
 else{
-    serverResponse.innerHTML = "";
+    // serverResponse.innerHTML = "";
+    // const labels = (document.getElementsByTagName("input"))
+    // const labelsArray = [...labels];
+    // labelsArray.map(function(d) {
+    //     return d.value = "";
+    // });
+
+
 }
 }
 
