@@ -12,7 +12,14 @@
 <body>
 
     <div class="container">
-        <h1 class="p-3 mb-2 bg-dark text-white d-flex justify-content-center">Formulario para entrega de Tablets</h1>
+        <h1 class="p-3 mb-2 bg-dark text-white d-flex justify-content-center">
+            <div class="">
+
+                <img height="80" src="http://media.utp.edu.co/posgrados/img/utp-150.png" alt="escudo UTP">
+    
+                Formulario para entrega de Tablets
+            </div>
+        </h1>
         <section>
             <h2 class="p-3 mb-2 bg-info text-white">Condiciones de Uso y Préstamo Tablets</h2>
             <p class="text-justify">Apreciado estudiante tenga en cuenta: <br><br>
@@ -26,18 +33,33 @@
                 Nos encontramos atravesando un momento difícil,  para la Universidad Tecnológica de Pereira ustedes son su razón de ser, esperamos que ésta estrategia pueda mantenerlo en su proceso académico llevándolo a feliz término. El buen uso de estos recursos demostrará el sentido de solidaridad que tenemos como comunidad académica, siendo éste sentimiento un insumo fundamental para la construcción de una sociedad vencedora de las dificultades actuales.</p>
 
         </section>
-        <form action="">
+        <form id="dataForm" name="dataForm" action="">
             <section id="sectionData">
-                <h2 id="titleSectionData" class="p-3 mb-2 bg-info text-white">Contrato para el prestamo y uso de la tablet</h2>
+                <h2 id="titleSectionData" class="p-3 mb-2 bg-info text-white">
+                    Contrato para el prestamo y uso de la tablet
+                </h2>
                 <p class="text-justify">Entre los suscritos a saber LUIS FERNANDO GAVIRIA TRUJILLO, mayor y vecino de Pereira, identificado con cédula de ciudadanía No. 10.098.659 de Pereira, en su calidad de Rector y Representante legal de la UNIVERSIDAD TECNOLÓGICA DE PEREIRA NIT 891.480.035, nombrado por el Consejo Superior mediante Resolución No. 09 del 09 de agosto de 2017, ente autónomo universitario creado por la ley 41 de 1958, vinculado al ministerio de Educación Nacional y quien para efecto del presente contrato se denominará EL RECTOR y la persona cuyos datos figuran a continuación, y quien para efecto del presente contrato se denominará EL ESTUDIANTE </p>
                     <div class="form-group">
-                        <label for="code">Code</label><br>
-                        <input  class="rounded-sm form-control form-control-sm" id="code" type="text" autocomplete="off">
+                        <label for="code">Identificación</label><br>
+                        <div class="form-row align-items-center">
+                            <div class="col">
+                                <input name="id" class="rounded-sm form-control form-control-sm" id="code" type="text" autocomplete="off" required>                        
+
+                            </div>
+                            <div class="col-auto">
+                                <button id="searchDataButton" type="button" class="btn btn-outline-info">Buscar</button>
+
+                            </div>
+                            <div class="col-auto">
+                                <button id="cleanFormButton" type="reset" class="btn btn-outline-dark">Limpiar</button>
+                            </div>
+                        </div>
                         
                     </div>
                     <div id="dataImport" class="form-group">
 
                     </div>
+
                 
                 <p id="serverResponse"></p>
             </section>
@@ -61,14 +83,16 @@
                     </ul>
                 </p>
                 
-                <div class="form-group">
-                    <input class="form-check-input" type="checkbox" value="" id="acceptConditions">
-                    <label class="form-check-label" for="acceptConditions">
-                        <p><strong> <mark> Entiendo y Acepto las anteriores condiciones</mark></strong> </p>
-                    </label>
+                <div class="form-group form-check">
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" value="" id="acceptConditions" required>
+                        <label class="custom-control-label" for="acceptConditions">
+                            <p><strong> <mark> Entiendo y Acepto las anteriores condiciones</mark></strong> </p>
+                        </label>
+                      </div>
                 </div>
-
-                <button type="submit" class="btn btn-outline-info">Submit</button>
+                <button type="submit" disabled style="display: none" aria-hidden="true"></button>
+                <button type="submit" class="btn btn-outline-info" id="sendRegister">Registrar</button>
         </section>
     </form>
 

@@ -2,25 +2,82 @@ import { getMails } from './getCorreos.js';
 
 
 const codeInput = document.getElementById("code");
+const searchDataButton = document.getElementById("searchDataButton");
+const cleanFormButton = document.getElementById("cleanFormButton");
+const sendRegister = document.getElementById("sendRegister");
+const dataForm = document.getElementById("dataForm");
 // console.log(codeInput);
 
-
+//This functions are working on manage the form behavior
 codeInput
-    .addEventListener("change", (event) => {
+    .addEventListener("keypress", (event) => {
+        if (event.key == "Enter")
+            cleanForm();
+            callData(codeInput.value);
+            codeInput.focus();
+
+    })
+searchDataButton
+    .addEventListener("click", (event) => {
+        cleanForm();
         callData(codeInput.value);
+        codeInput.focus();
+
+    })
+cleanFormButton
+    .addEventListener("click", (event) => {
+        cleanForm();
+        codeInput.focus();
+
+    })
+dataForm
+    .addEventListener("submit", (event) => {
+        event.preventDefault();
+        //Here I have to call the function to make de POST request to a server
+        persistData();
+        console.log(event);
     })
 
-export const callData = (id) => {
-
+//This function clean all the form
+const cleanForm = () =>{
     //Clean the body after delete de code to search
     const el = document.getElementById('dataImport');
+    const checkConditions = document.getElementById('acceptConditions');
+    const alertMessage = document.getElementById("successAlert");
     el.innerHTML = "";
-    if(document.getElementById("successAlert"))
+    checkConditions.checked = false;
+    if(alertMessage)
     {
-        document.getElementById("successAlert").remove()
+        alertMessage.remove()
     }
-    
+}
 
+//on this function is going to pass the magic, call de put service to persist the data with the accept on the conditions
+const persistData = () => {
+    if(dataForm.code.checkValidity() && dataForm.acceptConditions.checkValidity())
+    {
+        console.log(dataForm);
+        // cleanForm();
+        // codeInput.focus();
+    }
+ 
+}
+
+//function to print an alert if the user exist or if not
+const alerMessage = () =>{
+
+    //Test printing a alert div when a user is found it
+    const alertSuccess = document.createElement("div");
+    const selectData = document.getElementById("sectionData")
+    alertSuccess.setAttribute('class', 'alert alert-success alert-dismissible fade show');
+    alertSuccess.setAttribute('role', 'alert');
+    alertSuccess.setAttribute('id', 'successAlert');
+    alertSuccess.innerHTML = 'Usuario Encontrado';
+    selectData.insertBefore(alertSuccess, selectData.children[1]);
+}
+
+//this function call the get service from de server with the data
+export const callData = (id) => {
 
     // const serverResponse = document.getElementById("serverResponse");
 
@@ -67,14 +124,8 @@ export const callData = (id) => {
                 return d[0],d[1];  
             });
         
-        //Test printing a alert div when a user is found it
-        const alertSuccess = document.createElement("div");
-        const selectData = document.getElementById("sectionData")
-        alertSuccess.setAttribute('class', 'alert alert-success alert-dismissible fade show');
-        alertSuccess.setAttribute('role', 'alert');
-        alertSuccess.setAttribute('id', 'successAlert');
-        alertSuccess.innerHTML = 'Usuario Encontrado';
-        selectData.insertBefore(alertSuccess, selectData.children[1]);
+        //call function to print success when user found it
+        // alerMessage();
         
         // serverResponse.innerHTML = formatedData;
 

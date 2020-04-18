@@ -2,3 +2,7 @@ body{
     font-family: sans-serif;
     padding-bottom: 2em;
 }
+
+.display-ruby-block{
+    display: block ruby;
+}
