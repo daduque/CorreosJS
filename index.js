@@ -1,6 +1,3 @@
-import { getMails } from './getCorreos.js';
-
-
 const codeInput = document.getElementById("code");
 const searchDataButton = document.getElementById("searchDataButton");
 const cleanFormButton = document.getElementById("cleanFormButton");
