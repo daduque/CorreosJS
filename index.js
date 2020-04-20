@@ -95,7 +95,7 @@ export const callData = (id) => {
     {
         
         const xhr = new XMLHttpRequest();
-        const sm = xhr.open("GET", `http://programasacademicos.utp.edu.co/programa-academico/${id}` , true);
+        const sm = xhr.open("GET", `https://programasacademicos.utp.edu.co/programa-academico/${id}` , true);
         xhr.onload = function() {
 
             // console.log(this.status, this.readyState, this.getAllResponseHeaders());
