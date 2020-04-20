@@ -8,20 +8,16 @@ const sendRegister = document.getElementById("sendRegister");
 const dataForm = document.getElementById("dataForm");
 // console.log(codeInput);
 
-//This functions are working on manage the form behavior
+//This events are working on manage the form behavior
 codeInput
     .addEventListener("keypress", (event) => {
         if (event.key == "Enter")
-            cleanForm();
-            callData(codeInput.value);
-            codeInput.focus();
+            searchData();
 
     })
 searchDataButton
     .addEventListener("click", (event) => {
-        cleanForm();
-        callData(codeInput.value);
-        codeInput.focus();
+        searchData();
 
     })
 cleanFormButton
@@ -52,11 +48,28 @@ const cleanForm = () =>{
     }
 }
 
+//condensed function to call data and validate the imput code is not null
+const searchData = () =>{
+    if(codeInput.value)
+    {
+        callData(codeInput.value);
+        codeInput.focus();
+        codeInput.classList.remove("is-invalid");
+    }
+    else{
+        codeInput.classList.add("is-invalid");
+        cleanForm();
+    }
+}
 //on this function is going to pass the magic, call de put service to persist the data with the accept on the conditions
 const persistData = () => {
     if(dataForm.code.checkValidity() && dataForm.acceptConditions.checkValidity())
     {
-        console.log(dataForm);
+        const object = {};
+        const inputList = new FormData(document.forms.dataForm);
+        inputList.forEach((value, key) => {object[key] = value});
+        const json = JSON.stringify(object);
+        console.log(json);
         // cleanForm();
         // codeInput.focus();
     }
@@ -78,7 +91,7 @@ const alerMessage = () =>{
 
 //this function call the get service from de server with the data
 export const callData = (id) => {
-
+    cleanForm();
     // const serverResponse = document.getElementById("serverResponse");
 
     if(id != "")
@@ -115,6 +128,7 @@ export const callData = (id) => {
                 //Create each input of the form with as value the value attribute and append it to the body form
                 const input = document.createElement("input");
                 input.value = d[1];
+                input.name = d[0];
                 input.type = 'text';
                 input.autocomplete = 'off';
                 input.setAttribute('class', 'rounded-sm form-control form-control-sm');
@@ -135,6 +149,7 @@ export const callData = (id) => {
     
     
     xhr.send();
+    
     }
 
     else{

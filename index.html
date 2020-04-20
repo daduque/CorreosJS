@@ -6,19 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Formulario Aceptación</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
 
-    <div class="container">
+    <div id="containerApp" class="container">
         <h1 class="p-3 mb-2 bg-dark text-white d-flex justify-content-center">
-            <div class="">
-
-                <img height="80" src="http://media.utp.edu.co/posgrados/img/utp-150.png" alt="escudo UTP">
-    
-                Formulario para entrega de Tablets
-            </div>
+            Formulario para entrega de Tablets
         </h1>
         <section>
             <h2 class="p-3 mb-2 bg-info text-white">Condiciones de Uso y Préstamo Tablets</h2>
@@ -85,7 +80,7 @@
                 
                 <div class="form-group form-check">
                     <div class="custom-control custom-checkbox">
-                        <input class="custom-control-input" type="checkbox" value="" id="acceptConditions" required>
+                        <input class="custom-control-input" type="checkbox" name="acceptConditions" id="acceptConditions" required>
                         <label class="custom-control-label" for="acceptConditions">
                             <p><strong> <mark> Entiendo y Acepto las anteriores condiciones</mark></strong> </p>
                         </label>
@@ -93,14 +88,12 @@
                 </div>
                 <button type="submit" disabled style="display: none" aria-hidden="true"></button>
                 <button type="submit" class="btn btn-outline-info" id="sendRegister">Registrar</button>
-        </section>
-    </form>
-
-        
-        
+            </section>
+        </form>
 
     </div>
     
-    <script type="module" src="index.js"></script>
+    <script type="module" src="./index.js"></script>
+        
 </body>
 </html>
