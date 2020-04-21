@@ -73,7 +73,7 @@ const persistData = () => {
         //     url: urlServer,
         //     type:"POST",
         //     dataType:"json",
-        //     data: json,
+        //     data: object,
         //     success: function( resp ) {
         //     console.log('heartbeat sent....');
         //     },
@@ -85,11 +85,15 @@ const persistData = () => {
         postData.open('POST', urlServer , true);
         // postData.setRequestHeader('Content-Type', "application/json; charset=UTF-8")
         postData.setRequestHeader('Content-Type', "application/x-www-form-urlencoded")
+        postData.setRequestHeader('X-Requested-With', 'XMLHttpRequest');        
         postData.onload = function() {
             console.log( postData.status, postData.statusText, postData.responseText);
 
         };
-        postData.send(json);
+        console.log(typeof(json), typeof(object));
+        console.log(object);
+        postData.send(inputList);
+
         // cleanForm();
         // codeInput.focus();
     }
