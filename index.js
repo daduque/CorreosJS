@@ -3,7 +3,8 @@ const searchDataButton = document.getElementById("searchDataButton");
 const cleanFormButton = document.getElementById("cleanFormButton");
 const sendRegister = document.getElementById("sendRegister");
 const dataForm = document.getElementById("dataForm");
-// console.log(codeInput);
+const checkConditions = document.getElementById('acceptConditions');
+const disableOnFalse = ["Acepto", "Numero Asignado", "Serial Equipo", "Serial Sim", "Validacion", "Cobertura", "Tipo Transporte", "Dias Transporte", "Tipo Dirección", "Nombre Completo"];
 
 //This events are working on manage the form behavior
 codeInput
@@ -26,16 +27,14 @@ cleanFormButton
 dataForm
     .addEventListener("submit", (event) => {
         event.preventDefault();
-        //Here I have to call the function to make de POST request to a server
         persistData();
-        console.log(event);
+        // console.log(event);
     })
 
 //This function clean all the form
 const cleanForm = () =>{
     //Clean the body after delete de code to search
     const el = document.getElementById('dataImport');
-    const checkConditions = document.getElementById('acceptConditions');
     const alertMessage = document.getElementById("successAlert");
     el.innerHTML = "";
     checkConditions.checked = false;
@@ -60,48 +59,32 @@ const searchData = () =>{
 }
 //on this function is going to pass the magic, call de put service to persist the data with the accept on the conditions
 const persistData = () => {
-    if(dataForm.code.checkValidity() && dataForm.acceptConditions.checkValidity())
+    if(dataForm.code.checkValidity() && dataForm.acceptConditions.checked)
     {
         const postData = new XMLHttpRequest();
-        const object = [];
+        const object = {};
         const urlServer = '//hydra.utp.edu.co/formulario/web/app_dev.php/aceptar-contrato';
         const inputList = new FormData(document.forms.dataForm);
         inputList.forEach((value, key) => {object[key] = value});
         const json = JSON.stringify(object);
-        console.log(JSON.parse(json));
-        // $.ajax({
-        //     url: urlServer,
-        //     method:"POST",
-        //     // dataType:"json",
-        //     data: {myData:object},
-        //     // contentType: "application/json; charset=utf-8",
-        //     contentType: "application/x-www-form-urlencoded; charset=UTF-8", // $_POST
-        //     success: function( resp ) {
-        //     console.log('heartbeat sent....');
-        //     },
-        //     error: function( req, status, err ) {
-        //     console.log( 'Error: ', status, err );
-        //     }
-        //     });
                 
         postData.open('POST', urlServer , true);
         // postData.setRequestHeader('Content-Type', "application/json; charset=UTF-8")
         // postData.setRequestHeader('Content-Type', "application/x-www-form-urlencoded")
         // postData.setRequestHeader('X-Requested-With', 'XMLHttpRequest');        
         postData.onload = function() {
-            console.log( postData.status, postData.statusText, postData.responseText);
+            if(postData.status == 200){
+                cleanForm();
+                alerMessage();
+                setTimeout(function(){
+                    cleanForm()
+                }, 3000);
+                searchDataButton.focus();
+            }
+            console.log( postData.statusText, postData.responseText);
 
         };
-        // console.log(typeof(json), typeof(object));
-        // console.log(object);
-        postData.send(
-            // json
-            object
-            // inputList
-            );
-
-        // cleanForm();
-        // codeInput.focus();
+        postData.send(json);
     }
  
 }
@@ -115,12 +98,12 @@ const alerMessage = () =>{
     alertSuccess.setAttribute('class', 'alert alert-success alert-dismissible fade show');
     alertSuccess.setAttribute('role', 'alert');
     alertSuccess.setAttribute('id', 'successAlert');
-    alertSuccess.innerHTML = 'Usuario Encontrado';
+    alertSuccess.innerHTML = 'Usuario Actualizado';
     selectData.insertBefore(alertSuccess, selectData.children[1]);
 }
 
 //this function call the get service from de server with the data
-export const callData = (id) => {
+const callData = (id) => {
     cleanForm();
     // const serverResponse = document.getElementById("serverResponse");
 
@@ -136,6 +119,9 @@ export const callData = (id) => {
           
         const data = JSON.parse(this.response);
         console.log(data[0]);
+        let isDisable = data[0]["Acepto"];
+        console.log(isDisable);
+
         
         //Print on a p tag the json response of the server get
         const formatedData = JSON.stringify(data[0])
@@ -144,8 +130,8 @@ export const callData = (id) => {
         //Take the data without format to transform and mapped
         const unformatedData = data[0];
         const entriesData = Object.entries(unformatedData);
-        const mappedData = entriesData.map(function(d)
-            {
+        entriesData.map(function(d)
+            {  
                 //Select the area to import the mapped data
                 const dataImportArea = document.getElementById('dataImport');
 
@@ -160,9 +146,9 @@ export const callData = (id) => {
                 const input = document.createElement("input");
                 input.value = d[1];
                 input.name = d[0];
-                if(d[0]=="Acepto")
-                    input.disabled = true;
                 input.type = 'text';
+                if(isDisable) 
+                    input.disabled = true;
                 input.autocomplete = 'off';
                 input.setAttribute('class', 'rounded-sm form-control form-control-sm');
                 dataImportArea.appendChild(input);
@@ -170,13 +156,19 @@ export const callData = (id) => {
                 
                 return d[0],d[1];  
             });
-        
-        //call function to print success when user found it
-        // alerMessage();
-        
-        // serverResponse.innerHTML = formatedData;
-
-        
+            //Check if isDable is true or not and take all the input fields on form and look for thoose in array disableOnFalse if match the field is disabled
+            //also disable the checkbox
+            const fields = document.getElementsByTagName("input");
+            if(isDisable)
+            {
+                checkConditions.disabled = true
+            }else{
+                checkConditions.disabled = false
+                disableOnFalse.map( key =>{
+                    if(fields[key])
+                        fields[key].disabled = true;
+                })
+            }
     };
     
     
@@ -196,62 +188,3 @@ export const callData = (id) => {
 
     }
 }
-
-// $(document).ready(function() {
-//     setInterval(function()
-//     {
-//         if(hasBeenSubmitted === false)
-//         {
-//             $.ajax({
-//             url:"hydra.utp.edu.co/derechos-de-peticion/web/app_dev.php/asignarAcceso/consultarAcceso",
-//             type:"GET",
-//             dataType:"json",
-//             data:{
-//             'idPQRDP': 262,
-//             'usuario': 'jhdajaramillo'
-//             },
-//             success: function( resp ) {
-//             console.log('heartbeat sent....');
-//             },
-//             error: function( req, status, err ) {
-//             console.log( 'Error: ', status, err );
-//             }
-//             });
-//         }
-//         else{
-//         hasBeenSubmitted = false;
-//         };
-//     },timeOut);
-//     });
-
-
-// var request = new XMLHttpRequest()
-
-// request.open('GET', 'http://programasacademicos.utp.edu.co/programa-academico/5', true)
-// request.onload = function() {
-//   // Begin accessing JSON data here
-//   var data = JSON.parse(this.response)
-
-//   if (request.status >= 200 && request.status < 400) {
-//       console.log(data);
-//     // data.forEach(movie => {
-//     //   console.log(movie.title)
-//     // })
-//   } else {
-//     console.log('error')
-//   }
-// }
-
-// request.send() 
-
-// let fichaTecnica;
-
-// const mails = async () => {
-//     fichaTecnica = await getMails();
-//     console.log(getMails);
-
-//     console.log(fichaTecnica);
-
-// };
-
-// mails();
