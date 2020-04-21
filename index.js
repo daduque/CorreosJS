@@ -62,11 +62,34 @@ const searchData = () =>{
 const persistData = () => {
     if(dataForm.code.checkValidity() && dataForm.acceptConditions.checkValidity())
     {
+        const postData = new XMLHttpRequest();
         const object = {};
+        const urlServer = '//hydra.utp.edu.co/formulario/web/app_dev.php/aceptar-contrato';
         const inputList = new FormData(document.forms.dataForm);
         inputList.forEach((value, key) => {object[key] = value});
         const json = JSON.stringify(object);
-        console.log(json);
+
+        // $.ajax({
+        //     url: urlServer,
+        //     type:"POST",
+        //     dataType:"json",
+        //     data: json,
+        //     success: function( resp ) {
+        //     console.log('heartbeat sent....');
+        //     },
+        //     error: function( req, status, err ) {
+        //     console.log( 'Error: ', status, err );
+        //     }
+        //     });
+                
+        postData.open('POST', urlServer , true);
+        postData.setRequestHeader('Content-Type', "application/json; charset=UTF-8")
+        // postData.setRequestHeader('Content-Type', "application/x-www-form-urlencoded")
+        postData.onload = function() {
+            console.log( postData.status, postData.statusText, postData.responseText);
+
+        };
+        postData.send(json);
         // cleanForm();
         // codeInput.focus();
     }
