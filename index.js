@@ -96,7 +96,7 @@ export const callData = (id) => {
         
         const xhr = new XMLHttpRequest();
         // xhr.open("GET", `https://programasacademicos.utp.edu.co/programa-academico/${id}` , true);
-        xhr.open("GET", `http://hydra.utp.edu.co/formulario/web/app_dev.php/estudiante/${id}` , true);
+        xhr.open("GET", `//hydra.utp.edu.co/formulario/web/app_dev.php/estudiante/${id}` , true);
         xhr.onload = function() {
 
             // console.log(this.status, this.readyState, this.getAllResponseHeaders());
