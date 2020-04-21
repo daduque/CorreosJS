@@ -83,8 +83,8 @@ const persistData = () => {
         //     });
                 
         postData.open('POST', urlServer , true);
-        postData.setRequestHeader('Content-Type', "application/json; charset=UTF-8")
-        // postData.setRequestHeader('Content-Type', "application/x-www-form-urlencoded")
+        // postData.setRequestHeader('Content-Type', "application/json; charset=UTF-8")
+        postData.setRequestHeader('Content-Type', "application/x-www-form-urlencoded")
         postData.onload = function() {
             console.log( postData.status, postData.statusText, postData.responseText);
 
