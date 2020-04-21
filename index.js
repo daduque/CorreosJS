@@ -69,30 +69,32 @@ const persistData = () => {
         inputList.forEach((value, key) => {object[key] = value});
         const json = JSON.stringify(object);
 
-        // $.ajax({
-        //     url: urlServer,
-        //     type:"POST",
-        //     dataType:"json",
-        //     data: object,
-        //     success: function( resp ) {
-        //     console.log('heartbeat sent....');
-        //     },
-        //     error: function( req, status, err ) {
-        //     console.log( 'Error: ', status, err );
-        //     }
-        //     });
+        $.ajax({
+            url: urlServer,
+            method:"POST",
+            dataType:"json",
+            data: {myData:object},
+            // contentType: "application/json; charset=utf-8",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8", // $_POST
+            success: function( resp ) {
+            console.log('heartbeat sent....');
+            },
+            error: function( req, status, err ) {
+            console.log( 'Error: ', status, err );
+            }
+            });
                 
-        postData.open('POST', urlServer , true);
-        // postData.setRequestHeader('Content-Type', "application/json; charset=UTF-8")
-        postData.setRequestHeader('Content-Type', "application/x-www-form-urlencoded")
-        postData.setRequestHeader('X-Requested-With', 'XMLHttpRequest');        
-        postData.onload = function() {
-            console.log( postData.status, postData.statusText, postData.responseText);
+        // postData.open('POST', urlServer , true);
+        // // postData.setRequestHeader('Content-Type', "application/json; charset=UTF-8")
+        // postData.setRequestHeader('Content-Type', "application/x-www-form-urlencoded")
+        // // postData.setRequestHeader('X-Requested-With', 'XMLHttpRequest');        
+        // postData.onload = function() {
+        //     console.log( postData.status, postData.statusText, postData.responseText);
 
-        };
-        console.log(typeof(json), typeof(object));
-        console.log(object);
-        postData.send(inputList);
+        // };
+        // console.log(typeof(json), typeof(object));
+        // console.log(object);
+        // postData.send(inputList);
 
         // cleanForm();
         // codeInput.focus();
