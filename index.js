@@ -63,38 +63,42 @@ const persistData = () => {
     if(dataForm.code.checkValidity() && dataForm.acceptConditions.checkValidity())
     {
         const postData = new XMLHttpRequest();
-        const object = {};
+        const object = [];
         const urlServer = '//hydra.utp.edu.co/formulario/web/app_dev.php/aceptar-contrato';
         const inputList = new FormData(document.forms.dataForm);
         inputList.forEach((value, key) => {object[key] = value});
         const json = JSON.stringify(object);
-
-        $.ajax({
-            url: urlServer,
-            method:"POST",
-            dataType:"json",
-            data: {myData:object},
-            // contentType: "application/json; charset=utf-8",
-            contentType: "application/x-www-form-urlencoded; charset=UTF-8", // $_POST
-            success: function( resp ) {
-            console.log('heartbeat sent....');
-            },
-            error: function( req, status, err ) {
-            console.log( 'Error: ', status, err );
-            }
-            });
+        console.log(JSON.parse(json));
+        // $.ajax({
+        //     url: urlServer,
+        //     method:"POST",
+        //     // dataType:"json",
+        //     data: {myData:object},
+        //     // contentType: "application/json; charset=utf-8",
+        //     contentType: "application/x-www-form-urlencoded; charset=UTF-8", // $_POST
+        //     success: function( resp ) {
+        //     console.log('heartbeat sent....');
+        //     },
+        //     error: function( req, status, err ) {
+        //     console.log( 'Error: ', status, err );
+        //     }
+        //     });
                 
-        // postData.open('POST', urlServer , true);
-        // // postData.setRequestHeader('Content-Type', "application/json; charset=UTF-8")
+        postData.open('POST', urlServer , true);
+        // postData.setRequestHeader('Content-Type', "application/json; charset=UTF-8")
         // postData.setRequestHeader('Content-Type', "application/x-www-form-urlencoded")
-        // // postData.setRequestHeader('X-Requested-With', 'XMLHttpRequest');        
-        // postData.onload = function() {
-        //     console.log( postData.status, postData.statusText, postData.responseText);
+        // postData.setRequestHeader('X-Requested-With', 'XMLHttpRequest');        
+        postData.onload = function() {
+            console.log( postData.status, postData.statusText, postData.responseText);
 
-        // };
+        };
         // console.log(typeof(json), typeof(object));
         // console.log(object);
-        // postData.send(inputList);
+        postData.send(
+            // json
+            object
+            // inputList
+            );
 
         // cleanForm();
         // codeInput.focus();
