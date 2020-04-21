@@ -95,20 +95,21 @@ export const callData = (id) => {
     {
         
         const xhr = new XMLHttpRequest();
-        const sm = xhr.open("GET", `https://programasacademicos.utp.edu.co/programa-academico/${id}` , true);
+        // xhr.open("GET", `https://programasacademicos.utp.edu.co/programa-academico/${id}` , true);
+        xhr.open("GET", `http://hydra.utp.edu.co/formulario/web/app_dev.php/estudiante/${id}` , true);
         xhr.onload = function() {
 
             // console.log(this.status, this.readyState, this.getAllResponseHeaders());
           
         const data = JSON.parse(this.response);
-        // console.log(data[2][0].fichaTecnica);
+        console.log(data[0]);
         
         //Print on a p tag the json response of the server get
-        const formatedData = JSON.stringify(data[2][0].fichaTecnica)
+        const formatedData = JSON.stringify(data[0])
         // serverResponse.innerHTML = formatedData;
         
         //Take the data without format to transform and mapped
-        const unformatedData = data[2][0].fichaTecnica;
+        const unformatedData = data[0];
         const entriesData = Object.entries(unformatedData);
         const mappedData = entriesData.map(function(d)
             {
@@ -118,7 +119,7 @@ export const callData = (id) => {
                 //Create each label of the form with as name the key  attribute and append it to the body form
                 const label = document.createElement("label");
                 label.innerHTML = d[0]
-                label.htmlFor = 'text';
+                label.htmlFor = d[0];
                 dataImportArea.appendChild(label);
                                 
                 
@@ -126,6 +127,8 @@ export const callData = (id) => {
                 const input = document.createElement("input");
                 input.value = d[1];
                 input.name = d[0];
+                if(d[0]=="Acepto")
+                    input.disabled = true;
                 input.type = 'text';
                 input.autocomplete = 'off';
                 input.setAttribute('class', 'rounded-sm form-control form-control-sm');
