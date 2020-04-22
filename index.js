@@ -4,7 +4,7 @@ const cleanFormButton = document.getElementById("cleanFormButton");
 const sendRegister = document.getElementById("sendRegister");
 const dataForm = document.getElementById("dataForm");
 const checkConditions = document.getElementById('acceptConditions');
-const disableOnFalse = ["Acepto", "Numero Asignado", "Serial Equipo", "Serial Sim", "Validacion", "Cobertura", "Tipo Transporte", "Dias Transporte", "Tipo Dirección", "Nombre Completo"];
+const disableOnFalse = ["Nombre Completo", "Acepto", "Numero Asignado", "Serial Equipo", "Serial Sim", "Validacion", "Cobertura", "Tipo Transporte", "Dias Transporte", "Tipo Dirección"];
 
 //This events are working on manage the form behavior
 codeInput
@@ -74,12 +74,17 @@ const persistData = () => {
         // postData.setRequestHeader('X-Requested-With', 'XMLHttpRequest');        
         postData.onload = function() {
             if(postData.status == 200){
+                let temp = "Gracias " + "<strong>"+ (dataForm["Nombre Completo"].value).toUpperCase() + "</strong>"+ ", ha firmado exitosamente.";
                 cleanForm();
-                alerMessage();
+                alerMessage(temp, 'alert-success');
+                const myAnchor = document.getElementById("backToMessage");
+                myAnchor.focus();
+                
+                codeInput.value = "";
                 setTimeout(function(){
-                    cleanForm()
-                }, 3000);
-                searchDataButton.focus();
+                    cleanForm();
+                    codeInput.focus();
+                }, 5000);
             }
             console.log( postData.statusText, postData.responseText);
 
@@ -90,15 +95,15 @@ const persistData = () => {
 }
 
 //function to print an alert if the user exist or if not
-const alerMessage = () =>{
+const alerMessage = (alertMessage, alertType) =>{
 
     //Test printing a alert div when a user is found it
     const alertSuccess = document.createElement("div");
     const selectData = document.getElementById("sectionData")
-    alertSuccess.setAttribute('class', 'alert alert-success alert-dismissible fade show');
+    alertSuccess.setAttribute('class',`alert ${alertType} alert-dismissible fade show`);
     alertSuccess.setAttribute('role', 'alert');
     alertSuccess.setAttribute('id', 'successAlert');
-    alertSuccess.innerHTML = 'Usuario Actualizado';
+    alertSuccess.innerHTML = alertMessage;
     selectData.insertBefore(alertSuccess, selectData.children[1]);
 }
 
@@ -162,7 +167,9 @@ const callData = (id) => {
             if(isDisable)
             {
                 checkConditions.disabled = true
+                sendRegister.disabled = true
             }else{
+                sendRegister.disabled = false
                 checkConditions.disabled = false
                 disableOnFalse.map( key =>{
                     if(fields[key])
@@ -176,8 +183,6 @@ const callData = (id) => {
     xhr.send();
     
     }
-
-    else{
         // serverResponse.innerHTML = "";
         // const labels = (document.getElementsByTagName("input"))
         // const labelsArray = [...labels];
@@ -185,6 +190,4 @@ const callData = (id) => {
         //     return d.value = "";
         // });
 
-
-    }
 }
