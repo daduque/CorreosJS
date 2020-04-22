@@ -63,7 +63,7 @@ const persistData = () => {
     {
         const postData = new XMLHttpRequest();
         const object = {};
-        const urlServer = '//hydra.utp.edu.co/formulario/web/app_dev.php/aceptar-contrato';
+        const urlServer = '//appweb.utp.edu.co/formulario/web/app_dev.php/aceptar-entrega';
         const inputList = new FormData(document.forms.dataForm);
         inputList.forEach((value, key) => {object[key] = value});
         const json = JSON.stringify(object);
@@ -117,15 +117,15 @@ const callData = (id) => {
         
         const xhr = new XMLHttpRequest();
         // xhr.open("GET", `https://programasacademicos.utp.edu.co/programa-academico/${id}` , true);
-        xhr.open("GET", `//hydra.utp.edu.co/formulario/web/app_dev.php/estudiante/${id}` , true);
+        xhr.open("GET", `//appweb.utp.edu.co/formulario/web/app_dev.php/entrega/${id}` , true);
         xhr.onload = function() {
 
             // console.log(this.status, this.readyState, this.getAllResponseHeaders());
           
         const data = JSON.parse(this.response);
-        console.log(data[0]);
+        // console.log(data[0]);
         let isDisable = data[0]["Acepto"];
-        console.log(isDisable);
+        // console.log(isDisable);
 
         
         //Print on a p tag the json response of the server get
@@ -168,12 +168,18 @@ const callData = (id) => {
             {
                 checkConditions.disabled = true
                 sendRegister.disabled = true
+                fields['Acepto'].value ="Si";
             }else{
                 sendRegister.disabled = false
                 checkConditions.disabled = false
                 disableOnFalse.map( key =>{
                     if(fields[key])
-                        fields[key].disabled = true;
+                        {
+                            fields[key].disabled = true;
+                            fields['Acepto'].value = "--";
+                        }
+
+                        
                 })
             }
     };
