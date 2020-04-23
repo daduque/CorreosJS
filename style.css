@@ -6,3 +6,11 @@ body{
 .display-ruby-block{
     display: block ruby;
 }
+
+p, label, li, button{
+    font-size: 12px
+}
+
+label{
+    font-weight: bold;
+}
