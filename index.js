@@ -63,7 +63,7 @@ const persistData = () => {
     {
         const postData = new XMLHttpRequest();
         const object = {};
-        const urlServer = '//appweb.utp.edu.co/formulario/web/app_dev.php/aceptar-entrega';
+        const urlServer = '//appweb.utp.edu.co/formulario/web/aceptar-entrega';
         const inputList = new FormData(document.forms.dataForm);
         inputList.forEach((value, key) => {object[key] = value});
         const json = JSON.stringify(object);
@@ -87,6 +87,7 @@ const persistData = () => {
                 }, 5000);
             }
             console.log( postData.statusText, postData.responseText);
+            window.open(postData.responseText, '_self');
 
         };
         postData.send(json);
