@@ -28,11 +28,11 @@ cleanFormButton
     sendRegister
     .addEventListener("click", (event) => {
         const signMessage = document.getElementById("signMessage");
-        if(signMessage.className == "badge badge-info")
+        if(signMessage.className == "badge badge-warning")
         {
             sendRegister.type = "submit";
         }else {
-            signMessage.className = "badge badge-info"
+            signMessage.className = "badge badge-warning"
         }
         
         console.log("click");
