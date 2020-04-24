@@ -6,6 +6,9 @@ const dataForm = document.getElementById("dataForm");
 const checkConditions = document.getElementById('acceptConditions');
 const disableOnFalse = ["Nombre Completo", "Acepto", "Numero Asignado", "Serial Equipo", "Serial Sim", "Validacion", "Cobertura", "Tipo Transporte", "Dias Transporte", "Tipo Dirección"];
 
+$(function () {
+    $('[data-toggle="popover"]').popover()
+  })
 //This events are working on manage the form behavior
 codeInput
     .addEventListener("keypress", (event) => {
@@ -23,6 +26,22 @@ cleanFormButton
         cleanForm();
         codeInput.focus();
 
+    })
+
+    sendRegister
+    .addEventListener("click", (event) => {
+        const signMessage = document.getElementById("signMessage");
+        if(signMessage.className == "badge badge-info")
+        {
+            sendRegister.type = "submit";
+        }else {
+            signMessage.className = "badge badge-info"
+            sendRegister.setAttribute('data-container','body');
+            sendRegister.setAttribute('data-placement','right');
+            sendRegister.setAttribute('data-content','<- Firme solo si ya ha verificado sus datos.');
+        }
+        
+        console.log("click");
     })
 dataForm
     .addEventListener("submit", (event) => {
