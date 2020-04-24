@@ -37,7 +37,7 @@ cleanFormButton
         }else {
             signMessage.className = "badge badge-info"
             sendRegister.setAttribute('data-container','body');
-            sendRegister.setAttribute('data-placement','right');
+            sendRegister.setAttribute('data-placement','bottom');
             sendRegister.setAttribute('data-content','<- Firme solo si ya ha verificado sus datos.');
         }
         
@@ -68,12 +68,12 @@ const searchData = () =>{
     if(codeInput.value)
     {
         callData(codeInput.value);
-        codeInput.focus();
         codeInput.classList.remove("is-invalid");
     }
     else{
         codeInput.classList.add("is-invalid");
         cleanForm();
+        codeInput.focus();
     }
 }
 //on this function is going to pass the magic, call de put service to persist the data with the accept on the conditions
