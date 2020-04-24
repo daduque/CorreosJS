@@ -31,11 +31,10 @@ cleanFormButton
         if(signMessage.className == "badge badge-warning")
         {
             sendRegister.type = "submit";
+            window.scrollTo(0,0);
         }else {
             signMessage.className = "badge badge-warning"
         }
-        
-        console.log("click");
     })
 dataForm
     .addEventListener("submit", (event) => {
